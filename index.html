@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
       (function () {
-        emailjs.init("YOUR_PUBLIC_KEY");
+        emailjs.init("VvhAYAp8C-TzI5ZiC");
       })();
     </script>
     <style>
@@ -485,17 +485,225 @@
         transform: translateY(-3px);
       }
 
-      /* Responsive Design - Improved */
+      /* --- AI Chatbot Widget Styles --- */
+      .chatbot-container {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 1000;
+        font-family: inherit;
+      }
+
+      #chatbot-toggle {
+        background: #6a1b9a;
+        color: #ffffff;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 50px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s, background 0.2s;
+      }
+
+      #chatbot-toggle:hover {
+        background: #4527a0;
+        transform: scale(1.03);
+      }
+
+      .dark-mode #chatbot-toggle {
+        background: #e91e63;
+      }
+
+      .dark-mode #chatbot-toggle:hover {
+        background: #c2185b;
+      }
+
+      .chatbot-window {
+        position: absolute;
+        bottom: 70px;
+        right: 0;
+        width: 360px;
+        height: 480px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+        transition: opacity 0.3s, transform 0.3s;
+      }
+
+      .dark-mode .chatbot-window {
+        background: #1e293b;
+        border-color: #334155;
+      }
+
+      .chatbot-window.hidden {
+        display: none;
+      }
+
+      .chatbot-header {
+        background: #6a1b9a;
+        color: #ffffff;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .dark-mode .chatbot-header {
+        background: #0f172a;
+      }
+
+      .chatbot-title-area {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .chatbot-header h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #ffffff;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        background: #22c55e;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      #chatbot-close {
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      .chatbot-messages {
+        flex: 1;
+        padding: 16px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: #f8fafc;
+      }
+
+      .dark-mode .chatbot-messages {
+        background: #0f172a;
+      }
+
+      .chatbot-msg {
+        max-width: 85%;
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      .bot-msg {
+        background: #ffffff;
+        color: #334155;
+        align-self: flex-start;
+        border: 1px solid #e2e8f0;
+      }
+
+      .dark-mode .bot-msg {
+        background: #1e293b;
+        color: #e2e8f0;
+        border-color: #334155;
+      }
+
+      .user-msg {
+        background: #6a1b9a;
+        color: #ffffff;
+        align-self: flex-end;
+      }
+
+      .dark-mode .user-msg {
+        background: #e91e63;
+      }
+
+      .chatbot-input-area {
+        padding: 12px;
+        background: #ffffff;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .dark-mode .chatbot-input-area {
+        background: #1e293b;
+        border-color: #334155;
+      }
+
+      .chatbot-input-area input {
+        flex: 1;
+        padding: 8px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        outline: none;
+        font-size: 0.9rem;
+        margin: 0;
+        min-height: auto;
+      }
+
+      .dark-mode .chatbot-input-area input {
+        background: #0f172a;
+        border-color: #334155;
+        color: #f0f0f0;
+      }
+
+      .chatbot-input-area button {
+        background: #6a1b9a;
+        color: #ffffff;
+        border: none;
+        padding: 8px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .dark-mode .chatbot-input-area button {
+        background: #e91e63;
+      }
+
+      #mic-button.listening {
+        background: #ef4444 !important;
+        animation: pulse 1.5s infinite;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+      }
+
+      /* Responsive Design */
       @media (max-width: 1024px) {
         .container {
           width: 95%;
           padding: 0 15px;
         }
-
         section {
           padding: 70px 0;
         }
-
         .profile-img {
           width: 320px;
           height: 320px;
@@ -506,44 +714,21 @@
         body {
           font-size: 16px;
         }
-
-        h1 {
-          font-size: 2.8rem;
-        }
-
-        h2 {
-          font-size: 2.2rem;
-        }
-
-        h3 {
-          font-size: 1.8rem;
-        }
-
-        .profile-img {
-          width: 300px;
-          height: 300px;
-        }
-
-        .navbar {
-          padding: 1rem 1.5rem;
-        }
-
-        .nav-links {
-          gap: 1.5rem;
-        }
+        h1 { font-size: 2.8rem; }
+        h2 { font-size: 2.2rem; }
+        h3 { font-size: 1.8rem; }
+        .profile-img { width: 300px; height: 300px; }
+        .navbar { padding: 1rem 1.5rem; }
+        .nav-links { gap: 1.5rem; }
       }
 
       @media (max-width: 768px) {
-        .mobile-menu-btn {
-          display: block;
-        }
-
+        .mobile-menu-btn { display: block; }
         .nav-links {
           position: fixed;
           top: 80px;
           left: -100%;
           width: 100%;
-          height: calc(100vh - 80px);
           background: var(--nav-bg-light);
           flex-direction: column;
           justify-content: flex-start;
@@ -551,174 +736,35 @@
           transition: left 0.3s ease;
           gap: 2rem;
         }
-
-        .dark-mode .nav-links {
-          background: var(--nav-bg-dark);
-        }
-
-        .nav-links.active {
-          left: 0;
-        }
-
-        .navbar {
-          padding: 1rem;
-        }
-
-        .navbar img {
-          height: 45px;
-        }
-
-        h1 {
-          font-size: 2.5rem;
-        }
-
-        h2 {
-          font-size: 2rem;
-        }
-
-        h3 {
-          font-size: 1.6rem;
-        }
-
-        .profile-img {
-          width: 280px;
-          height: 280px;
-        }
-
-        .services-grid,
-        .projects-grid {
-          grid-template-columns: 1fr;
-          gap: 2rem;
-        }
-
-        .service-card,
-        .project-card {
-          padding: 1.5rem;
-        }
-
-        .contact-form {
-          padding: 1.5rem;
-        }
-
-        .footer {
-          flex-direction: column;
-          text-align: center;
-          gap: 1.5rem;
-          padding: 1.5rem;
-        }
-
-        .footer-links {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
+        .dark-mode .nav-links { background: var(--nav-bg-dark); }
+        .nav-links.active { left: 0; }
+        .navbar { padding: 1rem; }
+        .navbar img { height: 45px; }
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.6rem; }
+        .profile-img { width: 280px; height: 280px; }
+        .services-grid, .projects-grid { grid-template-columns: 1fr; gap: 2rem; }
+        .service-card, .project-card, .contact-form { padding: 1.5rem; }
+        .footer { flex-direction: column; text-align: center; gap: 1.5rem; padding: 1.5rem; }
+        .footer-links { flex-wrap: wrap; justify-content: center; }
+        .chatbot-window { width: calc(100vw - 32px); right: -10px; height: 420px; }
       }
 
       @media (max-width: 480px) {
-        body {
-          font-size: 15px;
-        }
-
-        .navbar a {
-          font-size: 1.1rem;
-        }
-
-        .profile-img {
-          width: 250px;
-          height: 250px;
-        }
-
-        h1 {
-          font-size: 2.2rem;
-        }
-
-        h2 {
-          font-size: 1.8rem;
-        }
-
-        h3 {
-          font-size: 1.4rem;
-        }
-
-        p,
-        li {
-          font-size: 1.1rem;
-        }
-
-        section {
-          padding: 50px 0;
-        }
-
-        .hero {
-          padding: 3rem 0;
-        }
-
-        .service-card,
-        .project-card {
-          padding: 1.2rem;
-        }
-
-        .project-info {
-          padding: 1.2rem;
-        }
-
-        input,
-        textarea {
-          padding: 0.8rem;
-          font-size: 1rem;
-        }
-
-        button[type="submit"] {
-          padding: 1rem 2rem;
-          width: 100%;
-          max-width: 200px;
-        }
-
-        .footer a {
-          font-size: 1rem;
-        }
-
-        ul {
-          padding-left: 1rem;
-        }
-      }
-
-      @media (max-width: 360px) {
-        .profile-img {
-          width: 220px;
-          height: 220px;
-        }
-
-        h1 {
-          font-size: 2rem;
-        }
-
-        h2 {
-          font-size: 1.6rem;
-        }
-
-        h3 {
-          font-size: 1.3rem;
-        }
-
-        .navbar {
-          padding: 0.8rem;
-        }
-
-        .navbar img {
-          height: 40px;
-        }
+        body { font-size: 15px; }
+        .profile-img { width: 250px; height: 250px; }
+        h1 { font-size: 2.2rem; }
+        h2 { font-size: 1.8rem; }
+        h3 { font-size: 1.4rem; }
+        p, li { font-size: 1.1rem; }
+        section { padding: 50px 0; }
+        .hero { padding: 3rem 0; }
+        input, textarea { padding: 0.8rem; font-size: 1rem; }
+        button[type="submit"] { padding: 1rem 2rem; width: 100%; max-width: 200px; }
       }
     </style>
   </head>
-
-
-
-
-
-
-
-
-
 
   <body>
     <!-- Navigation -->
@@ -806,7 +852,6 @@
             </div>
           </div>
 
-
            <div class="project-card">
             <video src="dictionary.mp4" controls muted playsinline loop></video>
             <div class="project-info">
@@ -817,7 +862,6 @@
             </div>
           </div>
          
-          
            <div class="project-card">
             <video src="todo.mp4" controls muted playsinline loop></video>
             <div class="project-info">
@@ -829,7 +873,6 @@
             </div>
           </div>
 
-
             <div class="project-card">
             <video src="dsaproject.mp4" controls muted playsinline loop></video>
             <div class="project-info">
@@ -839,9 +882,6 @@
               </p>
             </div>
           </div>
-
-
-
 
             <div class="project-card">
             <video src="osproject.mp4" controls muted playsinline loop></video>
@@ -853,7 +893,6 @@
             </div>
           </div>
 
-
             <div class="project-card">
             <video src="stop watch.mp4" controls muted playsinline loop></video>
             <div class="project-info">
@@ -864,7 +903,6 @@
             </div>
           </div>
           
-
             <div class="project-card">
             <video src="notes.mp4" controls muted playsinline loop></video>
             <div class="project-info">
@@ -876,11 +914,6 @@
           </div>
         </div>
       </section>
-
-
-
-
-
 
       <!-- Contact Section -->
       <section id="contact">
@@ -915,41 +948,53 @@
     <footer class="footer">
       <p>@MjalalkhanAllrightsreseved25</p>
       <div class="footer-links">
-        <a
-          href="https://www.linkedin.com/in/muhammad-jalal-khan-999950321/"
-          target="_blank"
-          >LinkedIn</a
-        >
+        <a href="https://www.linkedin.com/in/muhammad-jalal-khan-999950321/" target="_blank">LinkedIn</a>
         <a href="https://www.github.com/Mjalalkhan66" target="_blank">GitHub</a>
-        <a href="https://www.Facebook.com/M jalal khan" target="_blank"
-          >Facebook</a
-        >
       </div>
     </footer>
 
+    <!-- AI Chatbot Widget -->
+    <div id="portfolio-chatbot" class="chatbot-container">
+      <button id="chatbot-toggle" aria-label="Open chat with Jalal's AI assistant">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg>
+        <span>Chat with my AI</span>
+      </button>
 
+      <div id="chatbot-window" class="chatbot-window hidden">
+        <div class="chatbot-header">
+          <div class="chatbot-title-area">
+            <span class="status-dot"></span>
+            <h3>Jalal's Assistant</h3>
+          </div>
+          <button id="chatbot-close" aria-label="Close chat">&times;</button>
+        </div>
 
+        <div id="chatbot-messages" class="chatbot-messages">
+          <div class="chatbot-msg bot-msg">
+            Hi! I'm Muhammad Jalal Khan's AI assistant. Ask me anything about his engineering studies at UET Peshawar, React/Tailwind web apps, or C++ projects. You can type or use the mic 🎤!
+          </div>
+        </div>
 
+        <div class="chatbot-input-area">
+          <button id="mic-button" title="Speak to chat" aria-label="Use microphone">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+          </button>
+          <input type="text" id="user-input" placeholder="Type a message..." aria-label="Type your message">
+          <button id="send-button" aria-label="Send message">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- End AI Chatbot Widget -->
 
-
-
-
-
-
-
-
-
-    
     <script>
       // Theme Toggle Functionality
       const themeToggle = document.getElementById("themeToggle");
       const body = document.body;
 
-      // Check for saved theme preference or respect OS preference
       const savedTheme = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
       if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
         body.classList.add("dark-mode");
@@ -958,7 +1003,6 @@
 
       themeToggle.addEventListener("click", () => {
         body.classList.toggle("dark-mode");
-
         if (body.classList.contains("dark-mode")) {
           localStorage.setItem("theme", "dark");
           themeToggle.textContent = "☀️";
@@ -975,12 +1019,9 @@
 
       mobileMenuBtn.addEventListener("click", () => {
         navLinks.classList.toggle("active");
-        mobileMenuBtn.textContent = navLinks.classList.contains("active")
-          ? "✕"
-          : "☰";
+        mobileMenuBtn.textContent = navLinks.classList.contains("active") ? "✕" : "☰";
       });
 
-      // Close mobile menu when clicking on a link
       navItems.forEach((item) => {
         item.addEventListener("click", () => {
           navLinks.classList.remove("active");
@@ -988,14 +1029,12 @@
         });
       });
 
-      // Smooth scrolling for navigation links
+      // Smooth scrolling
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
           e.preventDefault();
-
           const targetId = this.getAttribute("href");
           if (targetId === "#") return;
-
           const targetElement = document.querySelector(targetId);
           if (targetElement) {
             window.scrollTo({
@@ -1006,18 +1045,14 @@
         });
       });
 
-      // Auto-play videos when they are in viewport (with improved mobile handling)
+      // Video autoplay observer
       const videos = document.querySelectorAll("video");
-
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              // Only autoplay on non-mobile devices or if user allows
               if (window.innerWidth > 768) {
-                entry.target.play().catch((e) => {
-                  console.log("Autoplay prevented:", e);
-                });
+                entry.target.play().catch((e) => console.log("Autoplay prevented:", e));
               }
             } else {
               entry.target.pause();
@@ -1028,55 +1063,174 @@
       );
 
       videos.forEach((video) => {
-        // Add playsinline attribute for better mobile behavior
         video.setAttribute("playsinline", "");
         observer.observe(video);
       });
 
-      // Form submission handling
-      document
-        .getElementById("contactForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
+      // EmailJS Form submission
+      document.getElementById("contactForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const formStatus = document.getElementById("formStatus");
+        const submitButton = this.querySelector('button[type="submit"]');
 
-          const formStatus = document.getElementById("formStatus");
-          const submitButton = this.querySelector('button[type="submit"]');
+        submitButton.textContent = "Sending...";
+        submitButton.disabled = true;
+        formStatus.className = "form-status";
+        formStatus.textContent = "";
 
-          // Show loading state
-          submitButton.textContent = "Sending...";
-          submitButton.disabled = true;
-          formStatus.className = "form-status";
-          formStatus.textContent = "";
+        const templateParams = {
+          from_name: document.getElementById("name").value,
+          from_email: document.getElementById("email").value,
+          message: document.getElementById("project").value,
+          to_email: "jk3434048@gmail.com",
+        };
 
-          // Prepare email parameters
-          const templateParams = {
-            from_name: document.getElementById("name").value,
-            from_email: document.getElementById("email").value,
-            message: document.getElementById("project").value,
-            to_email: "jk3434048@gmail.com",
+        emailjs
+          .send("service_648kxk5", "template_wt2vym2", templateParams)
+          .then(
+            function (response) {
+              formStatus.className = "form-status success";
+              formStatus.textContent = "Message sent successfully! I'll get back to you soon.";
+              document.getElementById("contactForm").reset();
+              submitButton.textContent = "Submit";
+              submitButton.disabled = false;
+            },
+            function (error) {
+              formStatus.className = "form-status error";
+              formStatus.textContent = "Failed to send message. Please contact me directly at jk3434048@gmail.com";
+              submitButton.textContent = "Submit";
+              submitButton.disabled = false;
+            }
+          );
+      });
+
+      // --- AI Chatbot Interactive Logic & Knowledge Base ---
+      document.addEventListener('DOMContentLoaded', () => {
+        const toggleBtn = document.getElementById('chatbot-toggle');
+        const closeBtn = document.getElementById('chatbot-close');
+        const chatWindow = document.getElementById('chatbot-window');
+        const sendBtn = document.getElementById('send-button');
+        const micBtn = document.getElementById('mic-button');
+        const userInput = document.getElementById('user-input');
+        const chatMessages = document.getElementById('chatbot-messages');
+
+        toggleBtn.addEventListener('click', () => chatWindow.classList.toggle('hidden'));
+        closeBtn.addEventListener('click', () => chatWindow.classList.add('hidden'));
+
+        // Knowledge base mapping your exact portfolio details
+        const knowledgeBase = [
+          {
+            keywords: ['who', 'jalal', 'about', 'introduction', 'background', 'uet', 'peshawar'],
+            response: "Muhammad Jalal Khan is an undergraduate computer systems engineer at UET Peshawar and a front-end ReactJS website developer."
+          },
+          {
+            keywords: ['skills', 'tech', 'stack', 'languages', 'tools', 'html', 'css', 'javascript', 'tailwind', 'react', 'c++'],
+            response: "Jalal is proficient in HTML5, CSS3, JavaScript ES6, ReactJS, Tailwind CSS, and C/C++. He excels at building responsive, modern user interfaces and single-page apps."
+          },
+          {
+            keywords: ['project', 'calculator', 'dictionary', 'todo', 'password', 'dsa', 'os', 'stopwatch', 'notes'],
+            response: "Jalal has built several impressive projects including a Password Generator with React/Tailwind, a Scientific & Signal Calculator, a precise English Dictionary, a Todo List app, a Phone Call Management System (DSA in C++), an OS Process Synchronization program, a Stopwatch, and a Notes app!"
+          },
+          {
+            keywords: ['services', 'offer', 'hire', 'freelance'],
+            response: "Jalal offers services for modern responsive websites using HTML/CSS/JavaScript/React/Tailwind, single-page React applications, advanced Tailwind styling, and C++ problem-solving."
+          },
+          {
+            keywords: ['contact', 'email', 'phone', 'whatsapp', 'reach', 'social', 'linkedin', 'github', 'facebook'],
+            response: "You can reach Jalal via phone/WhatsApp at 03159035669, email at jk3434048@gmail.com, or through his LinkedIn, GitHub, and Facebook links in the footer!"
+          }
+        ];
+
+        function getBotResponse(input) {
+          const query = input.toLowerCase();
+          for (let item of knowledgeBase) {
+            if (item.keywords.some(keyword => query.includes(keyword))) {
+              return item.response;
+            }
+          }
+          return "That's a great question! Jalal is a Computer Systems Engineer & React developer at UET Peshawar. You can ask about his skills, projects, services, or contact info (Phone: 03159035669, Email: jk3434048@gmail.com)!";
+        }
+
+        function addMessage(text, sender) {
+          const messageDiv = document.createElement('div');
+          messageDiv.classList.add('chatbot-msg', sender === 'user' ? 'user-msg' : 'bot-msg');
+          messageDiv.textContent = text;
+          chatMessages.appendChild(messageDiv);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+
+          if (sender === 'bot') {
+            speakText(text);
+          }
+        }
+
+        function handleUserMessage() {
+          const text = userInput.value.trim();
+          if (!text) return;
+
+          addMessage(text, 'user');
+          userInput.value = '';
+
+          setTimeout(() => {
+            const reply = getBotResponse(text);
+            addMessage(reply, 'bot');
+          }, 500);
+        }
+
+        sendBtn.addEventListener('click', handleUserMessage);
+        userInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') handleUserMessage();
+        });
+
+        // Text-to-Speech (Bot speaks answers)
+        function speakText(text) {
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 1.0;
+            utterance.pitch = 1.0;
+            window.speechSynthesis.speak(utterance);
+          }
+        }
+
+        // Speech-to-Text (Microphone input)
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+          const recognition = new SpeechRecognition();
+          recognition.continuous = false;
+          recognition.interimResults = false;
+          recognition.lang = 'en-US';
+
+          micBtn.addEventListener('click', () => {
+            try {
+              recognition.start();
+              micBtn.classList.add('listening');
+              userInput.placeholder = "Listening...";
+            } catch (err) {
+              console.error(err);
+            }
+          });
+
+          recognition.onresult = (event) => {
+            const speechToText = event.results[0][0].transcript;
+            userInput.value = speechToText;
+            micBtn.classList.remove('listening');
+            userInput.placeholder = "Type a message...";
+            handleUserMessage();
           };
 
-          // Send email using EmailJS
-          emailjs
-            .send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams)
-            .then(
-              function (response) {
-                formStatus.className = "form-status success";
-                formStatus.textContent =
-                  "Message sent successfully! I'll get back to you soon.";
-                document.getElementById("contactForm").reset();
-                submitButton.textContent = "Submit";
-                submitButton.disabled = false;
-              },
-              function (error) {
-                formStatus.className = "form-status error";
-                formStatus.textContent =
-                  "Failed to send message. Please try again or contact me directly at jk3434048@gmail.com";
-                submitButton.textContent = "Submit";
-                submitButton.disabled = false;
-              }
-            );
-        });
+          recognition.onerror = () => {
+            micBtn.classList.remove('listening');
+            userInput.placeholder = "Type a message...";
+          };
+
+          recognition.onend = () => {
+            micBtn.classList.remove('listening');
+            userInput.placeholder = "Type a message...";
+          };
+        } else {
+          micBtn.style.display = 'none';
+        }
+      });
     </script>
   </body>
 </html>
